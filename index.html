@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0b09">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Obidjon & Diloromoy — Nikoh va Sunnat To'yi Taklifnomasi</title>
+  <meta name="description" content="Majid Qurbonov va Ilyos Daminov oilalari: Obidjon & Diloromoy nikoh to'yi hamda Ibrohimxonning sunnat to'yiga lutfan taklif etamiz.">
+  
+  <!-- Google Fonts: Playfair Display, Great Vibes, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Ikonkalar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- CSS Stili -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Musiqa Fayli (Audio element) -->
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="Belalim%20-%20%D0%9C%D0%B8%D0%BD%D1%83%D1%81%20(hitmo.net).mp3" type="audio/mpeg">
+    <source src="Belalim - Минус (hitmo.net).mp3" type="audio/mpeg">
+    Brauzeringiz audio elementini qo'llab-quvvatlamaydi.
+  </audio>
+
+  <!-- =========================================================================
+       1. TO'LIQ EKRANLI FOTOGALEREYA FON (Video-like Ken Burns Slideshow)
+       ========================================================================= -->
+  <div class="video-bg-container" id="video-bg-container">
+    <div class="bg-slide active" style="background-image: url('images/5296295228820103735_120.jpg');"></div>
+    <div class="bg-slide" style="background-image: url('images/5296295228820103737_121.jpg');"></div>
+    <div class="bg-slide" style="background-image: url('images/5296295228820103738_121.jpg');"></div>
+    <div class="bg-slide" style="background-image: url('images/5296295228820103739_121.jpg');"></div>
+    <div class="bg-slide" style="background-image: url('images/5397673516615801941_1.jpg');"></div>
+    <!-- Qorong'iroq va oltin shaffof overlay (matnlar tiniq ko'rinishi uchun) -->
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Oltin Zarrachalar va Tushayotgan Gul Barglari uchun Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- =========================================================================
+       2. Boshlang'ich Konvert (Intro Screen)
+       ========================================================================= -->
+  <div class="envelope-overlay" id="envelope-overlay">
+    <div class="envelope-box">
+      <div class="seal-icon-wrapper" id="seal-icon-btn" title="Taklifnomani ochish uchun bosing">
+        <i class="fa-solid fa-envelope-open-text seal-icon"></i>
+      </div>
+      <p class="envelope-subtitle">Qo'shaloq To'y Tantanasi</p>
+      <h1 class="envelope-title">Taklifnoma</h1>
+      <p class="envelope-desc">
+        Majid Qurbonov va Ilyos Daminov oilalari Siz azizlarni farzandlarimizning Nikoh to'yi hamda Ibrohimxonning Sunnat to'yi tantanasiga lutfan taklif etadi.
+      </p>
+      <button class="open-btn" id="open-invitation-btn">
+        <i class="fa-solid fa-play"></i>
+        <span>Tomosha Qilish</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       3. Yuqori Navigatsiya & Progress Bar (Stories / Video Style)
+       ========================================================================= -->
+  <div class="top-nav-bar">
+    <div class="stories-progress-container" id="stories-progress">
+      <div class="progress-bar-segment"><div class="progress-bar-fill"></div></div>
+      <div class="progress-bar-segment"><div class="progress-bar-fill"></div></div>
+      <div class="progress-bar-segment"><div class="progress-bar-fill"></div></div>
+      <div class="progress-bar-segment"><div class="progress-bar-fill"></div></div>
+      <div class="progress-bar-segment"><div class="progress-bar-fill"></div></div>
+    </div>
+
+    <div class="top-actions">
+      <button class="top-action-btn" id="pause-play-btn" title="To'xtatish / Davom ettirish">
+        <i class="fa-solid fa-pause" id="pause-icon"></i>
+      </button>
+
+      <button class="top-action-btn music-btn" id="music-toggle" title="Musiqani yoqish/o'chirish">
+        <i class="fa-solid fa-compact-disc music-icon"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. ASOSIY TO'LIQ EKRANLI SAHNALAR (Stories / Slides)
+       ========================================================================= -->
+  <main class="presentation-stage" id="presentation-stage">
+
+    <!-- Sahna 1: Bosh Sahifa (Kelin-Kuyov, Ibrohimxon & Bismillah) -->
+    <section class="scene-card active" data-scene="0">
+      <div class="card-ornament-top"></div>
+      <div class="card-ornament-bottom"></div>
+
+      <div class="scene-content">
+        <div class="bismillah">Bismillahir Rohmanir Rohiym</div>
+        <div class="invitation-badge"><i class="fa-solid fa-sparkles"></i> Qo'shaloq To'y Tantanasi</div>
+
+        <h1 class="couple-names">
+          <span id="groom-name">Obidjon</span>
+          <span class="ampersand">&</span>
+          <span id="bride-name">Diloromoy</span>
+        </h1>
+
+        <div class="sunnat-intro-badge">
+          <i class="fa-solid fa-crown"></i>
+          <span>hamda suyuklimiz <strong>Ibrohimxon</strong>ning Sunnat To'yi</span>
+        </div>
+
+        <p class="scene-tagline">
+          "Ikki qalbning go'zal visol oqshomi hamda xonadonimiz quvonchi Ibrohimxonning qutlug' to'y tantanasi..."
+        </p>
+
+        <div class="wedding-main-date dual-dates-wrapper">
+          <span class="date-divider"></span>
+          <div class="dates-flex">
+            <span class="date-text">25 . 09 . 2026</span>
+            <span class="date-ampersand">&</span>
+            <span class="date-text">26 . 09 . 2026</span>
+          </div>
+          <span class="date-divider"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sahna 2: Taklif Matni, She'r & Oilalar -->
+    <section class="scene-card" data-scene="1">
+      <div class="card-ornament-top"></div>
+      <div class="card-ornament-bottom"></div>
+
+      <div class="scene-content">
+        <div class="section-gold-badge"><i class="fa-solid fa-heart"></i> Taklifnoma</div>
+        <h2 class="invitation-heading">Hurmatli va Qadrli Mehmonimiz!</h2>
+
+        <p class="invitation-text-body">
+          Alloh taoloning inoyati ila oila deb atalmish muqaddas ostonaga qadam qo'yayotgan farzandlarimiz <strong>Obidjon</strong> va <strong>Diloromoy</strong>ning <strong>Nikoh to'yi</strong> hamda xonadonimiz ko'rki, suyukli jajji o'g'limiz <strong>Ibrohimxon</strong>ning <strong>Sunnat to'yi</strong> munosabati bilan yozilajak to'yona dasturxonimizga, hayotimizning eng fayzli va unutilmas onlariga Siz azizlarni chin qalbimizdan taklif etamiz.
+        </p>
+
+        <div class="poetry-box">
+          <p class="poetry-text">
+            "Yurakda eng go'zal hislar uyg'ondi,<br>
+            Ikki yosh baxt sari qo'llarin tutdi.<br>
+            Ibrohimxonga ham umr tilagan,<br>
+            Siz aziz mehmonni ko'ngillar kutdi..."
+          </p>
+        </div>
+
+        <div class="families-badge">
+          <i class="fa-solid fa-house-chimney-user"></i>
+          <span>Majid Qurbonov va Ilyos Daminov oilalari</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sahna 3: Orqaga Hisoblash Taymeri -->
+    <section class="scene-card" data-scene="2">
+      <div class="card-ornament-top"></div>
+      <div class="card-ornament-bottom"></div>
+
+      <div class="scene-content">
+        <div class="section-gold-badge"><i class="fa-solid fa-clock"></i> Baxtli Onlar</div>
+        <h2 class="scene-title">To'y Kuniga Qadar</h2>
+        <p class="scene-subtitle">Orziqib kutilayotgan quvonchli onlarga oz fursat qoldi</p>
+
+        <div class="timer-grid">
+          <div class="timer-item">
+            <div class="timer-number" id="timer-days">00</div>
+            <div class="timer-label">Kun</div>
+          </div>
+          <div class="timer-item">
+            <div class="timer-number" id="timer-hours">00</div>
+            <div class="timer-label">Soat</div>
+          </div>
+          <div class="timer-item">
+            <div class="timer-number" id="timer-minutes">00</div>
+            <div class="timer-label">Daqiqa</div>
+          </div>
+          <div class="timer-item">
+            <div class="timer-number" id="timer-seconds">00</div>
+            <div class="timer-label">Soniya</div>
+          </div>
+        </div>
+
+        <div class="dual-timer-notes">
+          <div class="timer-event-row">
+            <span class="event-pill">1-kun</span>
+            <span class="event-txt"><strong>25-Sentyabr, 2026</strong> | 18:00 — "Shoxsaroy" to'yxonasi</span>
+          </div>
+          <div class="timer-event-row">
+            <span class="event-pill alt">2-kun</span>
+            <span class="event-txt"><strong>26-Sentyabr, 2026</strong> | 17:00 — "Diydor" to'ylar maskani</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sahna 4: Tantanali Marosim Dasturi (2 Kunlik Jadval) -->
+    <section class="scene-card" data-scene="3">
+      <div class="card-ornament-top"></div>
+      <div class="card-ornament-bottom"></div>
+
+      <div class="scene-content">
+        <div class="section-gold-badge"><i class="fa-solid fa-calendar-check"></i> Tartib</div>
+        <h2 class="scene-title">To'y Dasturi</h2>
+
+        <!-- Kunlarni Tanlash Tugmalari -->
+        <div class="schedule-day-tabs">
+          <button type="button" class="day-tab-btn active" data-day="day1">
+            <i class="fa-solid fa-rings-wedding"></i> 25.09 (Nikoh)
+          </button>
+          <button type="button" class="day-tab-btn" data-day="day2">
+            <i class="fa-solid fa-crown"></i> 26.09 (Qo'shaloq To'y)
+          </button>
+        </div>
+
+        <!-- 1-Kun Dasturi (25-Sentyabr) -->
+        <div class="day-schedule-pane active" id="pane-day1">
+          <div class="day-venue-subinfo">
+            <i class="fa-solid fa-location-dot"></i> "Shoxsaroy" to'yxonasi, Dobus qal'a mah. (18:00)
+          </div>
+          <div class="schedule-compact-grid">
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">18:00</div>
+              <div class="schedule-info">
+                <h4>Mehmonlar Tashrifi</h4>
+                <p>Aziz mehmonlarni qutlug' kutib olish</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">18:30</div>
+              <div class="schedule-info">
+                <h4>Nikoh va Oq Fotiha</h4>
+                <p>Obidjon & Diloromoy visol oqshomi boshlanishi</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">19:30</div>
+              <div class="schedule-info">
+                <h4>Tantanali Nikoh Bazmi</h4>
+                <p>Go'zal kuy-qo'shiqlar va qutlovlar</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">21:30</div>
+              <div class="schedule-info">
+                <h4>To'y Torti & Tilaklar</h4>
+                <p>Oq niyatlar ila 1-kun tantanasi yakuni</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Kun Dasturi (26-Sentyabr) -->
+        <div class="day-schedule-pane" id="pane-day2">
+          <div class="day-venue-subinfo">
+            <i class="fa-solid fa-location-dot"></i> "Diydor" to'ylar maskani (17:00)
+          </div>
+          <div class="schedule-compact-grid">
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">17:00</div>
+              <div class="schedule-info">
+                <h4>To'yona Dasturxoni</h4>
+                <p>Mehmonlar tashrifi va tantanali boshlanish</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">17:30</div>
+              <div class="schedule-info">
+                <h4>Ibrohimxonning Sunnat To'yi</h4>
+                <p>Kattalarning oq fotihasi va tabriklar</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">18:30</div>
+              <div class="schedule-info">
+                <h4>Qo'shaloq To'y Bazmi</h4>
+                <p>Nikoh va sunnat to'yi katta shodiyonasi</p>
+              </div>
+            </div>
+
+            <div class="schedule-compact-item">
+              <div class="schedule-time-badge">21:00</div>
+              <div class="schedule-info">
+                <h4>Ezgu Tilaklar & Shodiyona</h4>
+                <p>Barcha yaqinlar bilan qutlug' xotima</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Sahna 5: Manzillar (2 ta to'yxona), Tashrifni Tasdiqlash (RSVP) & Xotima -->
+    <section class="scene-card" data-scene="4">
+      <div class="card-ornament-top"></div>
+      <div class="card-ornament-bottom"></div>
+
+      <div class="scene-content">
+        <div class="section-gold-badge"><i class="fa-solid fa-map-location-dot"></i> To'yxonalar Manzili</div>
+
+        <div class="dual-venues-list">
+          <!-- 1-to'yxona -->
+          <div class="venue-card-item">
+            <div class="venue-day-badge">
+              <span class="venue-day-num"><i class="fa-solid fa-calendar-day"></i> 1-Kun</span>
+              <span class="venue-day-date">25.09.2026 | 18:00</span>
+            </div>
+            <h3 class="venue-name">"Shoxsaroy" to'yxonasi</h3>
+            <p class="venue-address">
+              <i class="fa-solid fa-location-dot"></i> Paxtachi tumani, Dobus qal'a mahallasi
+            </p>
+            <div class="map-links">
+              <a href="https://yandex.uz/maps/?text=Shoxsaroy+to'yxonasi+Paxtachi+Dobus+qal'a" target="_blank" rel="noopener noreferrer" class="compact-map-btn yandex">
+                <i class="fa-solid fa-map-pin"></i> Yandex Xarita
+              </a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Shoxsaroy+to'yxonasi+Paxtachi+Dobus+qal'a" target="_blank" rel="noopener noreferrer" class="compact-map-btn google">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+            </div>
+          </div>
+
+          <!-- 2-to'yxona -->
+          <div class="venue-card-item">
+            <div class="venue-day-badge alt-badge">
+              <span class="venue-day-num"><i class="fa-solid fa-calendar-day"></i> 2-Kun</span>
+              <span class="venue-day-date">26.09.2026 | 17:00</span>
+            </div>
+            <h3 class="venue-name">"Diydor" to'ylar maskani</h3>
+            <p class="venue-address">
+              <i class="fa-solid fa-location-dot"></i> Paxtachi tumani, Diydor to'ylar maskani
+            </p>
+            <div class="map-links">
+              <a href="https://yandex.uz/maps/?text=Diydor+to'ylar+maskani+Paxtachi" target="_blank" rel="noopener noreferrer" class="compact-map-btn yandex">
+                <i class="fa-solid fa-map-pin"></i> Yandex Xarita
+              </a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Diydor+to'ylar+maskani+Paxtachi" target="_blank" rel="noopener noreferrer" class="compact-map-btn google">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rsvp-compact">
+          <div class="rsvp-title">Tashrifingizni tasdiqlaysizmi?</div>
+          <div class="rsvp-choice-compact">
+            <button type="button" class="rsvp-mini-btn selected" data-choice="kelaman">
+              <i class="fa-solid fa-circle-check"></i> Albatta boramiz
+            </button>
+            <button type="button" class="rsvp-mini-btn" data-choice="kelaolmayman">
+              <i class="fa-solid fa-circle-xmark"></i> Kela olmaymiz
+            </button>
+          </div>
+          <button type="button" id="rsvp-submit-btn" class="rsvp-compact-submit">
+            Tashrifni Tasdiqlash
+          </button>
+          <div id="rsvp-status-msg" class="rsvp-status-msg"></div>
+        </div>
+
+        <div class="footer-compact">
+          <p class="footer-note">Majid Qurbonov oilasi va Ilyos Daminov oilasi</p>
+          <p class="footer-blessing">Tashrifingiz biz uchun katta sharaf va quvonchdir!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       6. Sahna navigatsiyasi tugmalari (Swipe + Tugmalar)
+       ========================================================================= -->
+  <button class="stage-nav-arrow stage-nav-prev" id="slide-prev-btn" title="Oldingi sahna" aria-label="Oldingi sahna">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <button class="stage-nav-arrow stage-nav-next" id="slide-next-btn" title="Keyingi sahna" aria-label="Keyingi sahna">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+
+  <!-- Skriptlar -->
+  <script src="script.js"></script>
+</body>
+</html>
